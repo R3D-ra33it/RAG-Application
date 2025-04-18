@@ -5,7 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.prompts import PromptTemplate
-
+import os
 
 import tempfile
 
@@ -15,6 +15,7 @@ import streamlit as st
 
 st.title('Document Question Answering BOT')
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+os.environ["OPENAI_API_KEY"] = openai_api_key
 
 PdfFile = st.sidebar.file_uploader('Upload your PDF file here.', type='pdf')
 
@@ -51,7 +52,7 @@ if PdfFile:
     # with st.chat_message('ai'):
     #     st.markdown(result)
 
-model = ChatOpenAI(openai_api_key =openai_api_key)
+model = ChatOpenAI()
 
 if 'messages' not in st.session_state:
     st.session_state.messages =[]
